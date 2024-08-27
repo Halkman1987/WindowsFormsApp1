@@ -39,7 +39,9 @@ namespace WindowsFormsApp1
             int buffposX1 = 0;
             int buffposY1 = 0;
             int buffposNull = 0;
-
+           
+            var pct = pctLineXY;   //Экземпляр пикчербокса
+            pct.MouseClick += pctLineXY_MouseClick; // подписка на клик или что то в этом роде
 
             Graphics g = pctLineXY.CreateGraphics();
             //Graphics r = pctLineXY.CreateGraphics();
@@ -55,7 +57,7 @@ namespace WindowsFormsApp1
                 g.DrawLine(pn, buffposNull, buffposY1, width, buffposX1);
                 buffposY1 += stepH;
                 buffposX1 += stepH;
-                g.DrawEllipse(pn, buffposNull, buffposY1, width, buffposX1);
+                //g.DrawEllipse(pn, buffposNull, buffposY1, width, buffposX1);// пока не работает
             }
 
             //if (m.Button ==  MouseButtons.Left)
@@ -85,9 +87,12 @@ namespace WindowsFormsApp1
 
         }
 
-        private void pctLineXY_MouseClick(object sender, MouseEventArgs e)
+        private void pctLineXY_MouseClick(object sender, MouseEventArgs e) // событие клика левой клавишей по пикчербоксу
         {
 
+            var location = e.Location; //пытаюсь получить координаты положения по клику 
+            var mX = location.X;
+            var mY = location.Y;
 
             //var pic = (btnClickThis_Click)sender;
             //Graphics g = pctLineXY.CreateGraphics();
