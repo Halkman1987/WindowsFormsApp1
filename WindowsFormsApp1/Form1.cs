@@ -89,7 +89,7 @@ namespace WindowsFormsApp1
         {
 
 
-            //var pic = btnClickThis_Click)sender;
+            //var pic = (btnClickThis_Click)sender;
             //Graphics g = pctLineXY.CreateGraphics();
             //Pen pn = new Pen(Color.Red, 3);
             //var g = pic.CreateGraphics();
