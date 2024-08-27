@@ -50,20 +50,23 @@ namespace WindowsFormsApp1
             for (int i = 0; i <= countW; i++)
             {
                 g.DrawLine(pn, buffposX, buffposY, buffposX, height);
+                //g.DrawEllipse(pn, buffposX, buffposY, 25, 25); //Рисуем кружки в строчку по горизонтали
                 buffposX += stepW;
+                
             }
             for (int i = 0; i <= countH; i++)
             {
                 g.DrawLine(pn, buffposNull, buffposY1, width, buffposX1);
+                // g.DrawEllipse(pn, buffposNull, buffposY1, 25, 25); //Рисуем кружки в строчку по вертикали
                 buffposY1 += stepH;
                 buffposX1 += stepH;
-                //g.DrawEllipse(pn, buffposNull, buffposY1, width, buffposX1);// пока не работает
+                
             }
-
+           // g.DrawEllipse(pn, buffposX, buffposY1, width, buffposX1);
+            //g.DrawEllipse(pn, 20, 150,30,30);
             //if (m.Button ==  MouseButtons.Left)
             //{
             //    g.DrawEllipse(pn, m.X, m.Y, 20, 20);
-
             // g.DrawEllipse(pn, buffposX, buffposY1, width, height);
         }
 
@@ -90,21 +93,20 @@ namespace WindowsFormsApp1
         private void pctLineXY_MouseClick(object sender, MouseEventArgs e) // событие клика левой клавишей по пикчербоксу
         {
 
-            var location = e.Location; //пытаюсь получить координаты положения по клику 
-            var mX = location.X;
-            var mY = location.Y;
+            //var location = e.Location; //пытаюсь получить координаты положения по клику 
+            //var mX = location.X;
+            //var mY = location.Y;
 
             //var pic = (btnClickThis_Click)sender;
-            //Graphics g = pctLineXY.CreateGraphics();
-            //Pen pn = new Pen(Color.Red, 3);
-            //var g = pic.CreateGraphics();
-            //if (e.Button == MouseButtons.Left)
-            //{
-
-            //    g.DrawEllipse(pn, e.X, e.Y, 20, 20);
-            //}
+            Graphics g = pctLineXY.CreateGraphics();
+            Pen pn = new Pen(Color.Red, 2);
+            
+            if (e.Button == MouseButtons.Left)
+            {
+                g.DrawEllipse(pn, e.X-15, e.Y-15, 30, 30);
+                
+            }
         }
-
     }
 }
 

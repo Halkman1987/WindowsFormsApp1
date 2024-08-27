@@ -70,17 +70,17 @@
             this.pctLineXY.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pctLineXY.Location = new System.Drawing.Point(61, 44);
             this.pctLineXY.Name = "pctLineXY";
-            this.pctLineXY.Size = new System.Drawing.Size(350, 281);
+            this.pctLineXY.Size = new System.Drawing.Size(400, 400);
             this.pctLineXY.TabIndex = 2;
             this.pctLineXY.TabStop = false;
-            this.pctLineXY.Click += new System.EventHandler(this.pctLineXY_Click);
+            this.pctLineXY.Click += new System.EventHandler(pctLineXY_Click);
             this.pctLineXY.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pctLineXY_MouseClick);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(800, 538);
             this.Controls.Add(this.pctLineXY);
             this.Controls.Add(this.lblHelloWorld);
             this.Controls.Add(this.btnClickThis);
