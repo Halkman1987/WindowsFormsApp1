@@ -38,22 +38,24 @@
             // 
             // btnClickThis
             // 
-            this.btnClickThis.Location = new System.Drawing.Point(545, 12);
+            this.btnClickThis.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnClickThis.Location = new System.Drawing.Point(545, 75);
             this.btnClickThis.Name = "btnClickThis";
             this.btnClickThis.Size = new System.Drawing.Size(243, 96);
             this.btnClickThis.TabIndex = 0;
-            this.btnClickThis.Text = "ClickThis";
+            this.btnClickThis.Text = "Нажмите для запуска игры";
             this.btnClickThis.UseVisualStyleBackColor = true;
             this.btnClickThis.Click += new System.EventHandler(this.btnClickThis_Click);
             // 
             // lblHelloWorld
             // 
             this.lblHelloWorld.AutoSize = true;
-            this.lblHelloWorld.Location = new System.Drawing.Point(621, 166);
+            this.lblHelloWorld.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblHelloWorld.Location = new System.Drawing.Point(551, 219);
             this.lblHelloWorld.Name = "lblHelloWorld";
-            this.lblHelloWorld.Size = new System.Drawing.Size(29, 13);
+            this.lblHelloWorld.Size = new System.Drawing.Size(227, 31);
             this.lblHelloWorld.TabIndex = 1;
-            this.lblHelloWorld.Text = "label";
+            this.lblHelloWorld.Text = "Подготовка поля";
             this.lblHelloWorld.Click += new System.EventHandler(this.lblHelloWorld_Click);
             // 
             // pct
@@ -74,13 +76,12 @@
             this.pctLineXY.TabIndex = 2;
             this.pctLineXY.TabStop = false;
             this.pctLineXY.Click += new System.EventHandler(pctLineXY_Click);
-            this.pctLineXY.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pctLineXY_MouseClick);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 538);
+            this.ClientSize = new System.Drawing.Size(929, 639);
             this.Controls.Add(this.pctLineXY);
             this.Controls.Add(this.lblHelloWorld);
             this.Controls.Add(this.btnClickThis);
