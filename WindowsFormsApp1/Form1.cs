@@ -115,6 +115,10 @@ namespace WindowsFormsApp1
         {
 
         }
+        public void ChertaGorizonta()
+        {
+
+        }
         public void CentrovkaNuLLika(MouseEventArgs e) // Метод для Нолика
         {
             int width = pctLineXY.Width;
@@ -149,7 +153,6 @@ namespace WindowsFormsApp1
 
             int coordinataX4 = bufX * stepx + stepx;//нижняя правая
             int coordinataY4 = bufY * stepy + stepy;
-
 
             Graphics g = pctLineXY.CreateGraphics();
             Pen pn = new Pen(Color.Blue, 3);
