@@ -115,6 +115,7 @@ namespace WindowsFormsApp1
         {
 
         }
+        
         public void ChertaGorizonta()
         {
 
@@ -160,17 +161,43 @@ namespace WindowsFormsApp1
             g.DrawLine(pn, coordinataX3, coordinataY3 , coordinataX2, coordinataY2);
         }
 
+        bool gameStarted = false;
         private void pctLineXY_MouseClick(object sender, MouseEventArgs e) // событие клика левой клавишей по пикчербоксу
         {
-            if (e.Button == MouseButtons.Right)
+            if(gameStarted == false)
+            {
+                gameStarted = true;
+                radioButton1.Enabled = false;
+                radioButton2.Enabled = false;
+            }
+            if (radioButton1.Checked == true)
             {
                 CentrovkaKrestika(e);
             }
-            
-            if (e.Button == MouseButtons.Left)
+            else
             {
                 CentrovkaNuLLika(e);
             }
+
+            //if (e.Button == MouseButtons.Right)
+            //{
+            //    CentrovkaKrestika(e);
+            //}
+            
+            //if (e.Button == MouseButtons.Left)
+            //{
+            //    CentrovkaNuLLika(e);
+            //}
+        }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e) //Крестик
+        {
+
+        }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e) // Нолик
+        {
+
         }
     }
 }
