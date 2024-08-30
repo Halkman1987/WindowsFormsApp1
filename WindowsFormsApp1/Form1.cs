@@ -24,7 +24,10 @@ namespace WindowsFormsApp1
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            
+            for (int i=0; i<10; i++)
+                for (int j = 0; j<10; j++)
+                    buffDatas[i,j] = "-";
+
         }
 
         public void btnClickThis_Click(object sender, EventArgs e)
@@ -115,7 +118,7 @@ namespace WindowsFormsApp1
         {
 
         }
-        
+        string[,] buffDatas = new string[10, 10];
         public void ChertaGorizonta()
         {
 
@@ -170,14 +173,21 @@ namespace WindowsFormsApp1
                 radioButton1.Enabled = false;
                 radioButton2.Enabled = false;
             }
-            if (radioButton1.Checked == true)
-            {
-                CentrovkaKrestika(e);
-            }
-            else
-            {
-                CentrovkaNuLLika(e);
-            }
+
+            int x = e.X / (pctLineXY.Width / 10);
+            int y = e.Y / (pctLineXY.Height / 10);
+
+            if (buffDatas[x,y] == "-")
+                if (radioButton1.Checked == true)
+                {
+                    CentrovkaKrestika(e);
+                    //после выполнения хода изменять значение этой ячейки массива на символ, которым сходили только что
+                    //это можно реализовать внутри метода рисования крестика или нолика
+                }
+                else
+                {
+                    CentrovkaNuLLika(e);
+                }
 
             //if (e.Button == MouseButtons.Right)
             //{
@@ -189,7 +199,13 @@ namespace WindowsFormsApp1
             //    CentrovkaNuLLika(e);
             //}
         }
+        public void botHodit() //ход бота
+        {
+            //рандомно (пока что) выбрать из массива buffDatas свободную ячейку и сходить туда противоположным игроку символом (крестик или нолик)
+            //придется изменить вызов методов рисования крестика и нолика, т.к. там на вход подается mouseevent
+            //из этого метода ты должен вызвать метод рисования крестика или нолика, передавать на вход координаты нужные и значение символа (чем рисовать - крестиком или ноликом)
 
+        }
         private void radioButton1_CheckedChanged(object sender, EventArgs e) //Крестик
         {
 
