@@ -18,12 +18,14 @@ namespace WindowsFormsApp1
         public Form1()
         {
             InitializeComponent();
-           // PictureBox pctLineXY;
-           
         }
-
+        
+        string[,] buffDatas = new string[10, 10]; // двумерный массив для хранения информ-ии по заполнению ячеек крестиком или ноликом
+        
+        bool gameStarted = false;
         private void Form1_Load(object sender, EventArgs e)
         {
+           //первичное заполнения ячеек шаблонными данными для проверки подмены в случае хода 
             for (int i=0; i<10; i++)
                 for (int j = 0; j<10; j++)
                     buffDatas[i,j] = "-";
@@ -52,18 +54,16 @@ namespace WindowsFormsApp1
             Graphics g = pctLineXY.CreateGraphics();
             Pen pn = new Pen(Color.Black, 2);
 
-            for (int i = 0; i <= countW; i++)
+            for (int i = 0; i <= countW; i++) //разлиновка поля
             {
                 g.DrawLine(pn, buffposX, buffposY, buffposX, height);
                 buffposX += stepW;
-
             }
             for (int i = 0; i <= countH; i++)
             {
                 g.DrawLine(pn, buffposNull, buffposY1, width, buffposX1);
                 buffposY1 += stepH;
                 buffposX1 += stepH;
-
             }
            
         }
@@ -118,7 +118,7 @@ namespace WindowsFormsApp1
         {
 
         }
-        string[,] buffDatas = new string[10, 10];
+       
         public void ChertaGorizonta()
         {
 
@@ -136,6 +136,7 @@ namespace WindowsFormsApp1
             Graphics g = pctLineXY.CreateGraphics();
             Pen pn = new Pen(Color.Red, 3);
             g.DrawEllipse(pn, coordinataX - 17, coordinataY - 17, 34, 34);
+            //buffDatas[e.X, e.Y] = "0";
         }
         public void CentrovkaKrestika(MouseEventArgs e) // Метод для крестика
         {
@@ -162,9 +163,10 @@ namespace WindowsFormsApp1
             Pen pn = new Pen(Color.Blue, 3);
             g.DrawLine(pn, coordinataX1 , coordinataY1 , coordinataX4, coordinataY4);
             g.DrawLine(pn, coordinataX3, coordinataY3 , coordinataX2, coordinataY2);
+           // buffDatas[e.X, e.Y] = "x";
         }
 
-        bool gameStarted = false;
+       
         private void pctLineXY_MouseClick(object sender, MouseEventArgs e) // событие клика левой клавишей по пикчербоксу
         {
             if(gameStarted == false)
@@ -188,7 +190,10 @@ namespace WindowsFormsApp1
                 {
                     CentrovkaNuLLika(e);
                 }
-
+            else
+            {
+                botHodit();
+            }
             //if (e.Button == MouseButtons.Right)
             //{
             //    CentrovkaKrestika(e);
@@ -201,10 +206,83 @@ namespace WindowsFormsApp1
         }
         public void botHodit() //ход бота
         {
+           
+            int width = pctLineXY.Width;
+            int height = pctLineXY.Height;
+
+            Random rnd = new Random();
+
+            int xHod = rnd.Next(0, width);
+            int yHod = rnd.Next(0, height);
+           
+                if (buffDatas[xHod, yHod] == "-")
+                {
+                    botNuLLik(xHod, yHod);
+                }
+           
+            //if(radioButton1.Checked == true)
+            // {
+            //     if (buffDatas[xHod, yHod] == "-")
+            //     {
+            //         botNuLLik(xHod, yHod);
+            //     }
+            // }
+            // else
+            // {
+            //     if (buffDatas[xHod, yHod] == "-")
+            //     {
+            //         botNuLLik(xHod, yHod);
+            //     }
+            // }
+
+            // = buffDatas[x,y];
             //рандомно (пока что) выбрать из массива buffDatas свободную ячейку и сходить туда противоположным игроку символом (крестик или нолик)
             //придется изменить вызов методов рисования крестика и нолика, т.к. там на вход подается mouseevent
-            //из этого метода ты должен вызвать метод рисования крестика или нолика, передавать на вход координаты нужные и значение символа (чем рисовать - крестиком или ноликом)
+            //из этого метода ты должен вызвать метод рисования крестика или нолика, передавать на вход координаты нужные и значение символа
+            //(чем рисовать - крестиком или ноликом)
 
+        }
+        public void botNuLLik(int x,int y) // Метод для Нолика
+        {
+            int width = pctLineXY.Width;
+            int height = pctLineXY.Height;
+            int stepx = width / 10; //ширина ячейки 
+            int stepy = height / 10;// высота ячейки
+            int bufX = x / stepx; //количество целых ячеек
+            int bufY = y / stepy;
+            int coordinataX = bufX * stepx + (stepx / 2);
+            int coordinataY = bufY * stepy + (stepy / 2);
+            Graphics g = pctLineXY.CreateGraphics();
+            Pen pn = new Pen(Color.Yellow, 3);
+            g.DrawEllipse(pn, coordinataX - 17, coordinataY - 17, 34, 34);
+            buffDatas[x, y] = "0";
+        }
+        public void botKrestik(int x, int y)
+        {
+            int width = pctLineXY.Width;
+            int height = pctLineXY.Height;
+            int stepx = width / 10; //ширина ячейки 
+            int stepy = height / 10;// высота ячейки
+            int bufX = x / stepx; //количество целых ячеек
+            int bufY = y / stepy;
+
+            int coordinataX1 = bufX * stepx;//верхняя левая
+            int coordinataY1 = bufY * stepy;
+
+            int coordinataX2 = bufX * stepx + stepx;//верхняя правая
+            int coordinataY2 = bufY * stepy;
+
+            int coordinataX3 = bufX * stepx;//верхняя правая
+            int coordinataY3 = bufY * stepy + stepy;
+
+            int coordinataX4 = bufX * stepx + stepx;//нижняя правая
+            int coordinataY4 = bufY * stepy + stepy;
+
+            Graphics g = pctLineXY.CreateGraphics();
+            Pen pn = new Pen(Color.Blue, 3);
+            g.DrawLine(pn, coordinataX1, coordinataY1, coordinataX4, coordinataY4);
+            g.DrawLine(pn, coordinataX3, coordinataY3, coordinataX2, coordinataY2);
+            buffDatas[x, y] = "x";
         }
         private void radioButton1_CheckedChanged(object sender, EventArgs e) //Крестик
         {
