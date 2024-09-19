@@ -119,7 +119,7 @@ namespace WindowsFormsApp1
 
         }
        
-        public void ChertaGorizonta()
+        public void ChertaGorizonta() // Метод для определения победы (НЕ НАПИСАН)
         {
 
         }
@@ -136,7 +136,7 @@ namespace WindowsFormsApp1
             Graphics g = pctLineXY.CreateGraphics();
             Pen pn = new Pen(Color.Red, 3);
             g.DrawEllipse(pn, coordinataX - 17, coordinataY - 17, 34, 34);
-            //buffDatas[e.X, e.Y] = "0";
+            buffDatas[bufX, bufY] = "0";
         }
         public void CentrovkaKrestika(MouseEventArgs e) // Метод для крестика
         {
@@ -163,10 +163,10 @@ namespace WindowsFormsApp1
             Pen pn = new Pen(Color.Blue, 3);
             g.DrawLine(pn, coordinataX1 , coordinataY1 , coordinataX4, coordinataY4);
             g.DrawLine(pn, coordinataX3, coordinataY3 , coordinataX2, coordinataY2);
-           // buffDatas[e.X, e.Y] = "x";
+            buffDatas[bufX, bufY] = "x";
         }
 
-       
+
         private void pctLineXY_MouseClick(object sender, MouseEventArgs e) // событие клика левой клавишей по пикчербоксу
         {
             if(gameStarted == false)
@@ -183,26 +183,22 @@ namespace WindowsFormsApp1
                 if (radioButton1.Checked == true)
                 {
                     CentrovkaKrestika(e);
+                    botHodit();
+                    
                     //после выполнения хода изменять значение этой ячейки массива на символ, которым сходили только что
                     //это можно реализовать внутри метода рисования крестика или нолика
                 }
                 else
                 {
+                   
                     CentrovkaNuLLika(e);
+                    botHodit();
                 }
             else
             {
-                botHodit();
+               // botHodit();
             }
-            //if (e.Button == MouseButtons.Right)
-            //{
-            //    CentrovkaKrestika(e);
-            //}
             
-            //if (e.Button == MouseButtons.Left)
-            //{
-            //    CentrovkaNuLLika(e);
-            //}
         }
         public void botHodit() //ход бота
         {
@@ -215,25 +211,24 @@ namespace WindowsFormsApp1
             int xHod = rnd.Next(0, width);
             int yHod = rnd.Next(0, height);
            
-                if (buffDatas[xHod, yHod] == "-")
-                {
-                    botNuLLik(xHod, yHod);
-                }
-           
-            //if(radioButton1.Checked == true)
-            // {
-            //     if (buffDatas[xHod, yHod] == "-")
-            //     {
-            //         botNuLLik(xHod, yHod);
-            //     }
-            // }
-            // else
-            // {
-            //     if (buffDatas[xHod, yHod] == "-")
-            //     {
-            //         botNuLLik(xHod, yHod);
-            //     }
-            // }
+            int stepx = width / 10; //ширина ячейки 
+            int stepy = height / 10;// высота ячейки
+            int hx = xHod/stepx;
+            int hy = yHod/stepy;
+
+            //if (buffDatas[hx, hy] == "-")
+            //{
+            //    botNuLLik(xHod, yHod);
+            //}
+
+            if (radioButton1.Checked == true)
+            {
+                botNuLLik(xHod, yHod);
+            }
+            else
+            {
+                botKrestik(xHod, yHod);
+            }
 
             // = buffDatas[x,y];
             //рандомно (пока что) выбрать из массива buffDatas свободную ячейку и сходить туда противоположным игроку символом (крестик или нолик)
@@ -253,9 +248,9 @@ namespace WindowsFormsApp1
             int coordinataX = bufX * stepx + (stepx / 2);
             int coordinataY = bufY * stepy + (stepy / 2);
             Graphics g = pctLineXY.CreateGraphics();
-            Pen pn = new Pen(Color.Yellow, 3);
+            Pen pn = new Pen(Color.Brown, 3);
             g.DrawEllipse(pn, coordinataX - 17, coordinataY - 17, 34, 34);
-            buffDatas[x, y] = "0";
+            buffDatas[bufX, bufY] = "0";
         }
         public void botKrestik(int x, int y)
         {
@@ -282,8 +277,9 @@ namespace WindowsFormsApp1
             Pen pn = new Pen(Color.Blue, 3);
             g.DrawLine(pn, coordinataX1, coordinataY1, coordinataX4, coordinataY4);
             g.DrawLine(pn, coordinataX3, coordinataY3, coordinataX2, coordinataY2);
-            buffDatas[x, y] = "x";
+            buffDatas[bufX, bufY] = "x";
         }
+          
         private void radioButton1_CheckedChanged(object sender, EventArgs e) //Крестик
         {
 
