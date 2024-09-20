@@ -135,8 +135,19 @@ namespace WindowsFormsApp1
             int coordinataY = bufY * stepy + (stepy / 2);
             Graphics g = pctLineXY.CreateGraphics();
             Pen pn = new Pen(Color.Red, 3);
-            g.DrawEllipse(pn, coordinataX - 17, coordinataY - 17, 34, 34);
-            buffDatas[bufX, bufY] = "0";
+            if (buffDatas[bufX, bufY] == "x" || buffDatas[bufX, bufY] == "0")
+            {
+                MessageBox.Show("Выберите другую клетку");
+                //g.DrawEllipse(pn, coordinataX - 17, coordinataY - 17, 34, 34);
+                //buffDatas[bufX, bufY] = "0";
+            }
+            else
+            {
+                g.DrawEllipse(pn, coordinataX - 17, coordinataY - 17, 34, 34);
+                buffDatas[bufX, bufY] = "0";
+            }    
+            
+
         }
         public void CentrovkaKrestika(MouseEventArgs e) // Метод для крестика
         {
@@ -161,11 +172,19 @@ namespace WindowsFormsApp1
 
             Graphics g = pctLineXY.CreateGraphics();
             Pen pn = new Pen(Color.Blue, 3);
-            g.DrawLine(pn, coordinataX1 , coordinataY1 , coordinataX4, coordinataY4);
-            g.DrawLine(pn, coordinataX3, coordinataY3 , coordinataX2, coordinataY2);
-            buffDatas[bufX, bufY] = "x";
-        }
+            if (buffDatas[bufX, bufY] == "x" || buffDatas[bufX, bufY] == "0")
+            {
+                MessageBox.Show("Выберите другую клетку"); 
+            }
+            else
+            {
+                g.DrawLine(pn, coordinataX1, coordinataY1, coordinataX4, coordinataY4);
+                g.DrawLine(pn, coordinataX3, coordinataY3, coordinataX2, coordinataY2);
+                buffDatas[bufX, bufY] = "x";
+            }
 
+        }
+        
 
         private void pctLineXY_MouseClick(object sender, MouseEventArgs e) // событие клика левой клавишей по пикчербоксу
         {
@@ -179,7 +198,7 @@ namespace WindowsFormsApp1
             int x = e.X / (pctLineXY.Width / 10);
             int y = e.Y / (pctLineXY.Height / 10);
 
-            if (buffDatas[x,y] == "-")
+           // if (buffDatas[x,y] == "-")
                 if (radioButton1.Checked == true)
                 {
                     CentrovkaKrestika(e);
@@ -194,10 +213,10 @@ namespace WindowsFormsApp1
                     CentrovkaNuLLika(e);
                     botHodit();
                 }
-            else
-            {
-               // botHodit();
-            }
+            //else
+            //{
+            //   // botHodit();
+            //}
             
         }
         public void botHodit() //ход бота
@@ -249,8 +268,12 @@ namespace WindowsFormsApp1
             int coordinataY = bufY * stepy + (stepy / 2);
             Graphics g = pctLineXY.CreateGraphics();
             Pen pn = new Pen(Color.Brown, 3);
-            g.DrawEllipse(pn, coordinataX - 17, coordinataY - 17, 34, 34);
-            buffDatas[bufX, bufY] = "0";
+            if (buffDatas[bufX, bufY] == "-")
+            {
+                g.DrawEllipse(pn, coordinataX - 17, coordinataY - 17, 34, 34);
+                buffDatas[bufX, bufY] = "0";
+            }
+                
         }
         public void botKrestik(int x, int y)
         {
@@ -275,9 +298,17 @@ namespace WindowsFormsApp1
 
             Graphics g = pctLineXY.CreateGraphics();
             Pen pn = new Pen(Color.Blue, 3);
-            g.DrawLine(pn, coordinataX1, coordinataY1, coordinataX4, coordinataY4);
-            g.DrawLine(pn, coordinataX3, coordinataY3, coordinataX2, coordinataY2);
-            buffDatas[bufX, bufY] = "x";
+            if (buffDatas[bufX, bufY] == "x" || buffDatas[bufX, bufY] == "0")
+            {
+                MessageBox.Show("Выберите другую клетку");
+            }
+            else
+            {
+                g.DrawLine(pn, coordinataX1, coordinataY1, coordinataX4, coordinataY4);
+                g.DrawLine(pn, coordinataX3, coordinataY3, coordinataX2, coordinataY2);
+                buffDatas[bufX, bufY] = "x";
+            }
+               
         }
           
         private void radioButton1_CheckedChanged(object sender, EventArgs e) //Крестик
