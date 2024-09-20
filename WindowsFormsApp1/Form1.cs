@@ -23,6 +23,7 @@ namespace WindowsFormsApp1
         string[,] buffDatas = new string[10, 10]; // двумерный массив для хранения информ-ии по заполнению ячеек крестиком или ноликом
         
         bool gameStarted = false;
+        bool pravoHoda = true;
         private void Form1_Load(object sender, EventArgs e)
         {
            //первичное заполнения ячеек шаблонными данными для проверки подмены в случае хода 
@@ -230,10 +231,10 @@ namespace WindowsFormsApp1
             int xHod = rnd.Next(0, width);
             int yHod = rnd.Next(0, height);
            
-            int stepx = width / 10; //ширина ячейки 
-            int stepy = height / 10;// высота ячейки
-            int hx = xHod/stepx;
-            int hy = yHod/stepy;
+            //int stepx = width / 10; //ширина ячейки 
+            //int stepy = height / 10;// высота ячейки
+            //int hx = xHod/stepx;
+            //int hy = yHod/stepy;
 
             //if (buffDatas[hx, hy] == "-")
             //{
@@ -266,11 +267,22 @@ namespace WindowsFormsApp1
             int bufY = y / stepy;
             int coordinataX = bufX * stepx + (stepx / 2);
             int coordinataY = bufY * stepy + (stepy / 2);
+            
             Graphics g = pctLineXY.CreateGraphics();
             Pen pn = new Pen(Color.Brown, 3);
+            
             if (buffDatas[bufX, bufY] == "x" || buffDatas[bufX, bufY] == "0")
             {
+                
                 MessageBox.Show("<bot> - Выберите другую клетку");
+                pravoHoda = false;// 
+               //пробуем сгенерить новые координаты для хода
+                int w = pctLineXY.Width;
+                int h = pctLineXY.Height;
+                Random rnd = new Random();
+                int xH = rnd.Next(0, w);
+                int yH = rnd.Next(0, h);
+                buffDatas[xH, yH] = "0";
             }
             else
             {
