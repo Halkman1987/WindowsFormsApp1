@@ -15,12 +15,13 @@ namespace WindowsFormsApp1
 
     public partial class Form1 : Form
     {
+       
         public Form1()
         {
             InitializeComponent();
         }
         
-        string[,] buffDatas = new string[10, 10]; // двумерный массив для хранения информ-ии по заполнению ячеек крестиком или ноликом
+        BuffDatas buffDataS = new BuffDatas();// двумерный массив для хранения информ-ии по заполнению ячеек крестиком или ноликом
         
         bool gameStarted = false;
         bool pravoHoda = true;
@@ -29,11 +30,11 @@ namespace WindowsFormsApp1
            //первичное заполнения ячеек шаблонными данными для проверки подмены в случае хода 
             for (int i=0; i<10; i++)
                 for (int j = 0; j<10; j++)
-                    buffDatas[i,j] = "-";
+                   this.buffDataS.buffD[i,j] = "-";
 
         }
 
-        public void btnClickThis_Click(object sender, EventArgs e)
+        public void btnClickThis_Click(object sender, EventArgs e) //Разлиновка поля при нажатии кнопки
         {
             lblHelloWorld.Text = " Разметка завершенна !";
             lblHelloWorld.ForeColor = System.Drawing.Color.BlueViolet;
@@ -120,10 +121,7 @@ namespace WindowsFormsApp1
 
         }
        
-        public void ChertaGorizonta() // Метод для определения победы (НЕ НАПИСАН)
-        {
-
-        }
+       
         public void CentrovkaNuLLika(MouseEventArgs e) // Метод для Нолика
         {
             int width = pctLineXY.Width;
@@ -136,16 +134,14 @@ namespace WindowsFormsApp1
             int coordinataY = bufY * stepy + (stepy / 2);
             Graphics g = pctLineXY.CreateGraphics();
             Pen pn = new Pen(Color.Red, 3);
-            if (buffDatas[bufX, bufY] == "x" || buffDatas[bufX, bufY] == "0")
+            if (buffDataS.buffD[bufX, bufY] == "x" || buffDataS.buffD[bufX, bufY] == "0")
             {
                 MessageBox.Show("Выберите другую клетку");
-                //g.DrawEllipse(pn, coordinataX - 17, coordinataY - 17, 34, 34);
-                //buffDatas[bufX, bufY] = "0";
             }
             else
             {
                 g.DrawEllipse(pn, coordinataX - 17, coordinataY - 17, 34, 34);
-                buffDatas[bufX, bufY] = "0";
+                buffDataS.buffD[bufX, bufY] = "0";
             }    
             
 
@@ -173,7 +169,7 @@ namespace WindowsFormsApp1
 
             Graphics g = pctLineXY.CreateGraphics();
             Pen pn = new Pen(Color.Blue, 3);
-            if (buffDatas[bufX, bufY] == "x" || buffDatas[bufX, bufY] == "0")
+            if (buffDataS.buffD[bufX, bufY] == "x" || buffDataS.buffD[bufX, bufY] == "0")
             {
                 MessageBox.Show("Выберите другую клетку"); 
             }
@@ -181,7 +177,7 @@ namespace WindowsFormsApp1
             {
                 g.DrawLine(pn, coordinataX1, coordinataY1, coordinataX4, coordinataY4);
                 g.DrawLine(pn, coordinataX3, coordinataY3, coordinataX2, coordinataY2);
-                buffDatas[bufX, bufY] = "x";
+                buffDataS.buffD[bufX, bufY] = "x";
             }
 
         }
@@ -199,28 +195,23 @@ namespace WindowsFormsApp1
             int x = e.X / (pctLineXY.Width / 10);
             int y = e.Y / (pctLineXY.Height / 10);
 
-           // if (buffDatas[x,y] == "-")
                 if (radioButton1.Checked == true)
                 {
                     CentrovkaKrestika(e);
                     botHodit();
-                    
                     //после выполнения хода изменять значение этой ячейки массива на символ, которым сходили только что
                     //это можно реализовать внутри метода рисования крестика или нолика
                 }
                 else
                 {
-                   
                     CentrovkaNuLLika(e);
                     botHodit();
                 }
-            //else
-            //{
-            //   // botHodit();
-            //}
+           
             
         }
-        public void botHodit() //ход бота
+       
+        public void botHodit() //ход бота перенесем в отдельный класс 
         {
            
             int width = pctLineXY.Width;
@@ -230,6 +221,7 @@ namespace WindowsFormsApp1
 
             int xHod = rnd.Next(0, width);
             int yHod = rnd.Next(0, height);
+
            
             //int stepx = width / 10; //ширина ячейки 
             //int stepy = height / 10;// высота ячейки
@@ -271,23 +263,23 @@ namespace WindowsFormsApp1
             Graphics g = pctLineXY.CreateGraphics();
             Pen pn = new Pen(Color.Brown, 3);
             
-            if (buffDatas[bufX, bufY] == "x" || buffDatas[bufX, bufY] == "0")
+            if (buffDataS.buffD[bufX, bufY] == "x" || buffDataS.buffD[bufX, bufY] == "0")
             {
                 
                 MessageBox.Show("<bot> - Выберите другую клетку");
-                pravoHoda = false;// 
+                //pravoHoda = false;// 
                //пробуем сгенерить новые координаты для хода
                 int w = pctLineXY.Width;
                 int h = pctLineXY.Height;
                 Random rnd = new Random();
                 int xH = rnd.Next(0, w);
                 int yH = rnd.Next(0, h);
-                buffDatas[xH, yH] = "0";
+                buffDataS.buffD[xH, yH] = "0";
             }
             else
             {
                 g.DrawEllipse(pn, coordinataX - 17, coordinataY - 17, 34, 34);
-                buffDatas[bufX, bufY] = "0";
+                buffDataS.buffD[bufX, bufY] = "0";
             }
                 
         }
@@ -314,7 +306,7 @@ namespace WindowsFormsApp1
 
             Graphics g = pctLineXY.CreateGraphics();
             Pen pn = new Pen(Color.Blue, 3);
-            if (buffDatas[bufX, bufY] == "x" || buffDatas[bufX, bufY] == "0")
+            if (buffDataS.buffD[bufX, bufY] == "x" || buffDataS.buffD[bufX, bufY] == "0")
             {
                 MessageBox.Show("<bot> - Выберите другую клетку");
             }
@@ -322,12 +314,12 @@ namespace WindowsFormsApp1
             {
                 g.DrawLine(pn, coordinataX1, coordinataY1, coordinataX4, coordinataY4);
                 g.DrawLine(pn, coordinataX3, coordinataY3, coordinataX2, coordinataY2);
-                buffDatas[bufX, bufY] = "x";
+                buffDataS.buffD[bufX, bufY] = "x";
             }
                
         }
           
-        private void radioButton1_CheckedChanged(object sender, EventArgs e) //Крестик
+        public void radioButton1_CheckedChanged(object sender, EventArgs e) //Крестик
         {
 
         }
