@@ -20,18 +20,22 @@ namespace WindowsFormsApp1
         {
             InitializeComponent();
         }
-
-        MovePeople movePeople = new MovePeople(buffDataS);
-        BotHodit botHodit = new BotHodit();
         public static BuffDatas buffDataS = new BuffDatas();// двумерный массив для хранения информ-ии по заполнению ячеек крестиком или ноликом
-        bool gameStarted = false;
         
+        MovePeople movePeople = new MovePeople(buffDataS);
+       
+        BotHodit botHodit = new BotHodit();
+       
+        bool gameStarted = false;
+
+       
+
         private void Form1_Load(object sender, EventArgs e)
         {
-           //первичное заполнения ячеек шаблонными данными для проверки подмены в случае хода 
-            for (int i=0; i<10; i++)
-                for (int j = 0; j<10; j++)
-                   buffDataS.buffD[i,j] = "-";
+            //первичное заполнения ячеек шаблонными данными для проверки подмены в случае хода 
+            for (int i = 0; i < 10; i++)
+                for (int j = 0; j < 10; j++)
+                    buffDataS.buffD[i, j] = "-";
 
         }
 
@@ -101,20 +105,20 @@ namespace WindowsFormsApp1
                 radioButton2.Enabled = false;
             }
 
-            int x = e.X / (pctLineXY.Width / 10);
-            int y = e.Y / (pctLineXY.Height / 10);
+            //int x = e.X / (pctLineXY.Width / 10);
+            //int y = e.Y / (pctLineXY.Height / 10);
 
                 if (radioButton1.Checked == true)
                 {
-                    movePeople.CentrovkaKrestika(e, ref pctLineXY);
-                    botHodit.MoveBot(ref radioButton1,ref pctLineXY);
+                    movePeople.CentrovkaKrestika(e, ref pctLineXY, ref buffDataS);
+                    botHodit.MoveBotNolik(/*ref radioButton1*/ref pctLineXY,ref buffDataS);
                     //после выполнения хода изменять значение этой ячейки массива на символ, которым сходили только что
                     //это можно реализовать внутри метода рисования крестика или нолика
                 }
                 else
                 {
-                    movePeople.CentrovkaNuLLika(e, ref pctLineXY);
-                    botHodit.MoveBot(ref radioButton1,ref pctLineXY);
+                    movePeople.CentrovkaNuLLika(e, ref pctLineXY, ref buffDataS);
+                    //botHodit.MoveBot(ref radioButton1,ref pctLineXY);
                 }
            
             

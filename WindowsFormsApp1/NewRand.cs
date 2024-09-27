@@ -19,7 +19,16 @@ namespace WindowsFormsApp1
 
             int xHod = rnd.Next(0, width);
             int yHod = rnd.Next(0, height);
-            return (xHod, yHod);
+
+            //var NewxHod = rnd.Item1;
+            //var NewyHod = rnd.Item2;
+           
+            int stepx = width / 10; //ширина ячейки 
+            int stepy = height / 10;// высота ячейки
+            int bufX = xHod / stepx; //количество целых ячеек
+            int bufY = yHod / stepy;
+
+            return (bufX, bufY);
         }
 
         
