@@ -9,21 +9,11 @@ namespace WindowsFormsApp1
 {
     internal class NewRand
     {
-       public PictureBox pct;
-
-        public NewRand(PictureBox pct)
+        
+        public (int,int) Rerandom(ref PictureBox pctLineXY)
         {
-            this.pct = pct;
-        }
-        public NewRand()
-        {
-            
-        }
-
-        public (int,int) Rerandom()
-        {
-            int width = pct.Width;
-            int height = pct.Height;
+            int width = pctLineXY.Width;
+            int height = pctLineXY.Height;
 
             Random rnd = new Random();
 

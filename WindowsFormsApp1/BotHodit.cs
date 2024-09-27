@@ -11,21 +11,22 @@ namespace WindowsFormsApp1
 {
     internal class BotHodit
     {
-        NewRand newRand;
-        Risovalka ris;
+        NewRand newRand = new NewRand();
+        Risovalka ris = new Risovalka();
+       
 
-
-        public void MoveBot()
+        public void MoveBot(ref System.Windows.Forms.RadioButton radioButton1, ref PictureBox pctLineXY)
         {
-            var xHod = newRand.Rerandom().Item1;
-            var yHod = newRand.Rerandom().Item2;
+            var rbd = newRand.Rerandom(ref pctLineXY);
+            var xHod = rbd.Item1;
+            var yHod = rbd.Item2;
             if (radioButton1.Checked == true)
             {
-                ris.Nolik(xHod, yHod);
+                ris.Nolik(xHod, yHod,ref pctLineXY);
             }
             else
             {
-                ris.Krestik(xHod, yHod);
+                ris.Krestik(xHod, yHod, ref pctLineXY);
             }
         }
         

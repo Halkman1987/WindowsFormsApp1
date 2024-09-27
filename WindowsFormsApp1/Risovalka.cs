@@ -10,26 +10,25 @@ namespace WindowsFormsApp1
 {
     internal class Risovalka
     {
-        public PictureBox pct;
+       // public PictureBox pct;
         public MouseEventArgs e;
-        BuffDatas buffDatas;
+        BuffDatas buffDatas = Form1.buffDataS;
 
-        public Risovalka(PictureBox pct, MouseEventArgs e)
+        public Risovalka()
         {
-            this.pct = pct;
-            this.e = e;
+          
         }
 
-        
 
-        public void Krestik(int x, int y)
+
+        public void Krestik(int x, int y, ref PictureBox pct)
         {
             int width = pct.Width;
             int height = pct.Height;
             int stepx = width / 10; //ширина ячейки 
             int stepy = height / 10;// высота ячейки
-            int bufX = e.X / stepx; //количество целых ячеек
-            int bufY = e.Y / stepy;
+            int bufX = x / stepx; //количество целых ячеек
+            int bufY = y / stepy;
 
             int coordinataX1 = bufX * stepx;//верхняя левая
             int coordinataY1 = bufY * stepy;
@@ -57,7 +56,7 @@ namespace WindowsFormsApp1
             }
         }
 
-        public void Nolik(int x, int y)
+        public void Nolik(int x, int y,ref PictureBox pct)
         {
             int width = pct.Width;
             int height = pct.Height;

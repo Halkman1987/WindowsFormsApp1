@@ -6,13 +6,10 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsApp1
 {
-    internal class BuffDatas
+    public class BuffDatas
     {
-        public string[,] buffD = new string[10, 10];
+        public  string[,] buffD = new string[10, 10];
 
-        public BuffDatas()
-        {
-           
-        }
+       
     }
 }
