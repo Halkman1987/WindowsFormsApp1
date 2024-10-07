@@ -77,7 +77,7 @@
             this.pctLineXY.Size = new System.Drawing.Size(400, 400);
             this.pctLineXY.TabIndex = 2;
             this.pctLineXY.TabStop = false;
-            this.pctLineXY.Click += new System.EventHandler(pctLineXY_Click);
+            this.pctLineXY.Click += new System.EventHandler(this.pctLineXY_Click);
             // 
             // radioButton1
             // 

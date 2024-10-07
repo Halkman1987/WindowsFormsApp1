@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Dynamic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -15,22 +17,51 @@ namespace WindowsFormsApp1
 
     public partial class Form1 : Form
     {
+        private int cellHeight;
+        private int cellWidht;
+        private Game game;
+        private Bot bot;
+        bool gameStarted = false;
+
         public Form1()
         {
             InitializeComponent();
+            game = new Game(10,10);
+            game.OnMove += WriteMove;
+            cellHeight = pctLineXY.Height / 10;//ширина ячейки
+            cellWidht = pctLineXY.Width / 10;
+            
+            // game.OnWin += 
         }
+       
+        private void WriteMove(object sender, (int x, int y, bool side) move)//записывается кто и куда сходил 
+        {
+            var (x, y, side) = move;
+            var centrX = (cellHeight * x); //+ (cellHeight / 2);
+            var centrY = (cellWidht * y);// + (cellWidht / 2);
+            Graphics g = pctLineXY.CreateGraphics();
+            Pen pn = new Pen(Color.Red, 3);
+            g.DrawEllipse(pn, centrY+2, centrX+2, 34, 34);
+            //рисуешь крестик или нолик  в зависимости кто сходил и что выбрано
+
+            
+
+
+        }
+
+       
         
-        string[,] buffDatas = new string[10, 10]; // двумерный массив для хранения информ-ии по заполнению ячеек крестиком или ноликом
+       string[,] buffDatas = new string[10, 10]; // двумерный массив для хранения информ-ии по заполнению ячеек крестиком или ноликом
         
-        bool gameStarted = false;
-        bool pravoHoda = true;
+       
+       
+       
         private void Form1_Load(object sender, EventArgs e)
         {
-           //первичное заполнения ячеек шаблонными данными для проверки подмены в случае хода 
-            for (int i=0; i<10; i++)
-                for (int j = 0; j<10; j++)
-                    buffDatas[i,j] = "-";
-
+            //первичное заполнения ячеек шаблонными данными для проверки подмены в случае хода 
+            for (int i = 0; i < 10; i++)
+                for (int j = 0; j < 10; j++) 
+                    buffDatas[i, j] = "-";
         }
 
         public void btnClickThis_Click(object sender, EventArgs e)
@@ -67,6 +98,7 @@ namespace WindowsFormsApp1
                 buffposX1 += stepH;
             }
            
+            game.Move(false, 0, 1);
         }
 
         private void lblHelloWorld_Click(object sender, EventArgs e)
@@ -79,41 +111,7 @@ namespace WindowsFormsApp1
            
         }
 
-        static public void pctLineXY_Click(object sender, EventArgs e )
-        {
-           
-          //  int width = pctLineXY.Width;
-          //  int height = pctLineXY.Height;
-          //  int stepW = width / 10;
-          //  int stepH = height / 10;
-          //  int countW = width / stepW;
-          //  int countH = height / stepH;
-          //  int buffposX = 0;
-          //  int buffposY = 0;
-          //  int buffposX1 = 0;
-          //  int buffposY1 = 0;
-          //  int buffposNull = 0;
-
-          // // var pct = pctLineXY;   //Экземпляр пикчербокса
-          ////  pct.MouseClick += pctLineXY_MouseClick; // подписка на клик или что то в этом роде
-
-          //  Graphics g = pctLineXY.CreateGraphics();
-          //  Pen pn = new Pen(Color.Black, 2);
-
-          //  for (int i = 0; i <= countW; i++)
-          //  {
-          //      g.DrawLine(pn, buffposX, buffposY, buffposX, height);
-          //      buffposX += stepW;
-
-          //  }
-          //  for (int i = 0; i <= countH; i++)
-          //  {
-          //      g.DrawLine(pn, buffposNull, buffposY1, width, buffposX1);
-          //      buffposY1 += stepH;
-          //      buffposX1 += stepH;
-
-          //  }
-        }
+        
 
         private void Form1_Shown(object sender, EventArgs e)
         {
@@ -173,6 +171,9 @@ namespace WindowsFormsApp1
 
             Graphics g = pctLineXY.CreateGraphics();
             Pen pn = new Pen(Color.Blue, 3);
+
+            game.BuffDataHod[bufX,bufY] = false;// записываем в ячейку ход 
+            
             if (buffDatas[bufX, bufY] == "x" || buffDatas[bufX, bufY] == "0")
             {
                 MessageBox.Show("Выберите другую клетку"); 
@@ -190,35 +191,38 @@ namespace WindowsFormsApp1
         private void pctLineXY_MouseClick(object sender, MouseEventArgs e) // событие клика левой клавишей по пикчербоксу
         {
             if(gameStarted == false)
-            {
                 gameStarted = true;
                 radioButton1.Enabled = false;
                 radioButton2.Enabled = false;
+           
+            if (radioButton1.Checked == true)
+            {
+                game.MoveSide = false;//выбираем за Х или О играть будем
+
+                CentrovkaKrestika(e);
+                bot.Move();
+                botHodit();
+
+                //после выполнения хода изменять значение этой ячейки массива на символ, которым сходили только что
+                //это можно реализовать внутри метода рисования крестика или нолика
+            }
+            else
+            {
+                game.MoveSide=false;
+
+                CentrovkaNuLLika(e);
+                botHodit();
             }
 
-            int x = e.X / (pctLineXY.Width / 10);
-            int y = e.Y / (pctLineXY.Height / 10);
 
-           // if (buffDatas[x,y] == "-")
-                if (radioButton1.Checked == true)
-                {
-                    CentrovkaKrestika(e);
-                    botHodit();
-                    
-                    //после выполнения хода изменять значение этой ячейки массива на символ, которым сходили только что
-                    //это можно реализовать внутри метода рисования крестика или нолика
-                }
-                else
-                {
-                   
-                    CentrovkaNuLLika(e);
-                    botHodit();
-                }
-            //else
-            //{
-            //   // botHodit();
-            //}
-            
+
+            //int x = e.X / (pctLineXY.Width / 10);
+            //int y = e.Y / (pctLineXY.Height / 10);
+
+
+
+
+
         }
         public void botHodit() //ход бота
         {
@@ -275,7 +279,7 @@ namespace WindowsFormsApp1
             {
                 
                 MessageBox.Show("<bot> - Выберите другую клетку");
-                pravoHoda = false;// 
+                //pravoHoda = false;
                //пробуем сгенерить новые координаты для хода
                 int w = pctLineXY.Width;
                 int h = pctLineXY.Height;
@@ -336,6 +340,42 @@ namespace WindowsFormsApp1
         {
 
         }
+
+        private void pctLineXY_Click(object sender, EventArgs e)
+        {
+            int width = pctLineXY.Width;
+            int height = pctLineXY.Height;
+            int stepW = width / 10;
+            int stepH = height / 10;
+            int countW = width / stepW;
+            int countH = height / stepH;
+            int buffposX = 0;
+            int buffposY = 0;
+            int buffposX1 = 0;
+            int buffposY1 = 0;
+            int buffposNull = 0;
+
+            // var pct = pctLineXY;   //Экземпляр пикчербокса
+            //  pct.MouseClick += pctLineXY_MouseClick; // подписка на клик или что то в этом роде
+            Graphics g = pctLineXY.CreateGraphics();
+            Pen pn = new Pen(Color.Black, 2);
+
+            for (int i = 0; i <= countW; i++)
+            {
+                g.DrawLine(pn, buffposX, buffposY, buffposX, height);
+                buffposX += stepW;
+
+            }
+            for (int i = 0; i <= countH; i++)
+            {
+                g.DrawLine(pn, buffposNull, buffposY1, width, buffposX1);
+                buffposY1 += stepH;
+                buffposX1 += stepH;
+
+            }
+        }
+
+       
     }
 }
 
