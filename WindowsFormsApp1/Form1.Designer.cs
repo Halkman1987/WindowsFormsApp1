@@ -131,9 +131,9 @@
         private System.Windows.Forms.Button btnClickThis;
         private System.Windows.Forms.Label lblHelloWorld;
         private System.Windows.Forms.PictureBox pct;
-        private System.Windows.Forms.PictureBox pctLineXY;
         private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.RadioButton radioButton2;
+        public System.Windows.Forms.PictureBox pctLineXY;
     }
 }
 
